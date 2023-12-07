@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useFormik } from "formik";
-import jwtDecode from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import axios from "axios";
 
 const UserDashboard = () => {
@@ -12,10 +12,11 @@ const UserDashboard = () => {
   const token = localStorage.getItem("accessToken");
   const [user, setUser] = useState(null);
   const [expandedTasks, setExpandedTasks] = useState({});
-  const [userTasks, setuserTasks] = useState([])
-  const [date, setdate] = useState("")
+  const [userTasks, setuserTasks] = useState([]);
+  const [date, setdate] = useState("");
   const isTokenValid = (token) => {
     try {
+      console.log(token);
       const decodedToken = jwtDecode(token);
       const currentTime = Date.now() / 1000; // Convert to seconds
       return decodedToken.exp > currentTime;
@@ -77,6 +78,7 @@ const UserDashboard = () => {
   };
 
   const onSubmit = (values)=>{
+    setIsLoading(true);
     const data = {
       title: values.title,
       description: values.description,
